@@ -2,26 +2,27 @@ import numpy as np
 import matplotlib.pyplot as plt
 from svg_handler import SVG_Handler
 
-t = np.linspace(0, 1, 10000)
-order = 100
+plotOrder = 1000
+t = np.linspace(0, 1, plotOrder)
+order = 10
 
-handler = SVG_Handler('share/ghost1-svgrepo-com.svg')
+handler = SVG_Handler('share/BatlineArt.svg')
 
 # plagiarism 101
 def get_fourier_coeff(func, T=[0, 1], N=4):
     indizes = np.arange(-N, N+1)
     coeff = np.empty(indizes.shape, dtype=complex)
-    
+
     period = T[1] - T[0]
     for k, ind in enumerate(indizes):
         solver = IS(lambda t: func(t)*np.exp(2j*np.pi*ind/period * t), T)
         coeff[k] = solver.get_approximation(200, n_gauss_param=6)
-    
+
     return indizes, coeff
 
 def fourier(t,C):
 
-    return np.sum([c*np.exp((n+1)*np.pi*2j*t) for n,c in enumerate(C)],0)
+    return np.sum([np.exp(c*(n+1)*np.pi*2j*t) for n,c in enumerate(C)],0)
 
 def constants(A,P):
 
@@ -40,10 +41,18 @@ values = [108+0j, 110+25j, 112+50j, 113.5+75j, 115+100j, 116+125j, 117.5+150j, 1
 #c = fourier(t,np.fft.fft(values))
 reals = [val.real for val in values]
 imags = [val.imag for val in values]
-c = fourier(t,constants(reals, imags))
+c = np.fft.fft(values,plotOrder)
+p = np.fft.ifft(c,plotOrder)
 
-_, c = get_fourier_coeff(lambda t: handler.get_point(t), T=[0,1],N=order)
+#_, coeff = get_fourier_coeff(lambda t: handler.get_point(t), T=[0,1],N=order)
+#c = fourier(t,constants(coeff.real, coeff.imag))
 
-plt.plot(c.real,c.imag)
-plt.scatter(reals, imags)
+c = np.fft.fft(handler.get_point(t))
+# do some stuff with c
+p = np.fft.ifft(c,plotOrder)
+
+#plt.plot(t,c.real)
+#plt.plot(t,c.imag)
+plt.plot(-p.real,-p.imag)
+#plt.scatter(reals, imags)
 plt.show()
