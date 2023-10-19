@@ -1,1 +1,2 @@
-*.swp
+**/*.swp
+src/__pycache__
