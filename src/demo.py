@@ -13,8 +13,8 @@ how parametric equations work.
 
 # read the image and make it into a list of points
 handler = SVG_Handler('share/BatlineArt.svg')
-t = np.linspace(0,1,5000)
-p = handler.get_point(t)
+t = np.linspace(0,2,1000) # change the second number for more or fewer periods
+p = handler.get_point(t%1)
 
 # initialize graphing stuff
 fig, ax = plt.subplots()
@@ -33,13 +33,13 @@ views = {
 currentview = 0
 
 # buttons for views
-nextax = fig.add_axes([0.9,0.025,0.1,0.04])
+nextax = fig.add_axes([0.55,0.025,0.1,0.04])
 nextbutton = Button(nextax, 'Next', hovercolor='0.95')
 
-resetax = fig.add_axes([0.8,0.025,0.1,0.04])
+resetax = fig.add_axes([0.45,0.025,0.1,0.04])
 resetbutton = Button(resetax, 'Reset', hovercolor='0.95')
 
-prevax = fig.add_axes([0.7,0.025,0.1,0.04])
+prevax = fig.add_axes([0.35,0.025,0.1,0.04])
 prevbutton = Button(prevax, 'Prev', hovercolor='0.95')
 
 # functions to switch/reset views
