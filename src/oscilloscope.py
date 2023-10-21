@@ -29,7 +29,8 @@ testImages = {
         'lightning':'share/cloud-bolt-svgrepo-com.svg',
         'skeleton':'share/skeleton-svgrepo-com.svg',
         'grave1':'share/grave-illustration-3-svgrepo-com.svg',
-        'sad':'share/sad-face-svgrepo-com.svg'
+        'sad':'share/sad-face-svgrepo-com.svg',
+        'fangs':'share/VampFangs.svg'
         }
 
 images = [
