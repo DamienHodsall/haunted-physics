@@ -56,7 +56,7 @@ for image in images:
 
 # signal must be <= 1 so divide by the largest magnitude to normalize (maybe not the most efficient but was quick to implement)
 maxamp = max(abs(compData))
-data = np.array([compData.real,compData.imag]).T / maxamp
+data = np.array([-compData.real,compData.imag]).T / maxamp
 
 # output to file, from data, with some stuff (don't mess with it and you'll be fine)
 wavio.write("share/output.wav", data, 44800, sampwidth=2)
