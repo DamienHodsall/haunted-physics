@@ -1,0 +1,14 @@
+../share/sound_library/atom.wav
+../share/sound_library/bat.wav
+../share/sound_library/cat.wav
+../share/sound_library/cauldron.wav
+../share/sound_library/fangs.wav
+../share/sound_library/ghost.wav
+../share/sound_library/grave.wav
+../share/sound_library/planet.wav
+../share/sound_library/pumpkin.wav
+../share/sound_library/skeleton.wav
+../share/sound_library/spider.wav
+../share/sound_library/witch.wav
+../share/sound_library/pacman.wav
+../share/sound_library/misfits.wav

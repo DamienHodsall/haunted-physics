@@ -17,11 +17,12 @@ t = np.linspace(0,2,1000) # change the second number for more or fewer periods
 p = handler.get_point(t%1)
 
 # initialize graphing stuff
+plt.style.use('dark_background')
 fig, ax = plt.subplots()
 plot3d = plt.subplot(projection='3d')
 
 # actual plotting of data
-plot3d.plot(p.real,-p.imag,t)
+plot3d.plot(p.real,-p.imag,t, color='red')
 plot3d.set(xlabel='x', ylabel='y',zlabel='t')
 
 # these views are xt yt xy
@@ -34,13 +35,13 @@ currentview = 0
 
 # buttons for views
 nextax = fig.add_axes([0.55,0.025,0.1,0.04])
-nextbutton = Button(nextax, 'Next', hovercolor='0.95')
+nextbutton = Button(nextax, 'Next', color='black', hovercolor='0.15')
 
 resetax = fig.add_axes([0.45,0.025,0.1,0.04])
-resetbutton = Button(resetax, 'Reset', hovercolor='0.95')
+resetbutton = Button(resetax, 'Reset', color='black', hovercolor='0.15')
 
 prevax = fig.add_axes([0.35,0.025,0.1,0.04])
-prevbutton = Button(prevax, 'Prev', hovercolor='0.95')
+prevbutton = Button(prevax, 'Prev', color='black', hovercolor='0.15')
 
 # functions to switch/reset views
 def nextview(event):

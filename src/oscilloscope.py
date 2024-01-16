@@ -17,7 +17,8 @@ periods = 250
 order = 800
 t = np.linspace(0, 1, order)
 
-showPreview = False
+showPreview = True
+writeWav = False
 
 # this just makes it easier to change testImages during testing
 testImages = {
@@ -33,12 +34,14 @@ testImages = {
         'fangs':'share/VampFangs.svg'
         }
 
-images = [
-        'share/BatlineArt.svg',
-        'share/jackOlantern2.svg',
-        'share/halloween-ghost-svgrepo-com.svg',
-        'share/grave-illustration-3-svgrepo-com.svg'
-        ]
+# images = [
+        # 'share/BatlineArt.svg',
+        # 'share/jackOlantern2.svg',
+        # 'share/halloween-ghost-svgrepo-com.svg',
+        # 'share/grave-illustration-3-svgrepo-com.svg'
+        # ]
+
+images = ['share/BatlineArt.svg']
 
 # SVG_Handler.get_points takes all the paths of the svg and makes them into a function
 # with domain [0,1) (so use np.linspace(0,1))
@@ -60,7 +63,8 @@ maxamp = max(abs(compData))
 data = np.array([-compData.real,compData.imag]).T / maxamp
 
 # output to file, from data, with some stuff (don't mess with it and you'll be fine)
-wavio.write("share/output.wav", data, 44800, sampwidth=2)
+if writeWav:
+    wavio.write("share/output.wav", data, 44800, sampwidth=2)
 
 if showPreview:
     plt.show()
