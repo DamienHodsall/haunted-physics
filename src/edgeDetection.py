@@ -8,11 +8,14 @@ import numpy as np
  
 
 
-def backgrond_removal2(frame, background):
+def backgrond_removal2(frame, background, return_pictures=False):
+    #Takes a frame of a video stream and a picture of a background
+    #and does background removal, edge detection, find contours, procesess contours
+    #works best with a flat, monocolour background
 
-    #True to return output, edges, blurred, gray,outline
+    #True to return output, edges, blurred, gray, outline
     #False to return only outline
-    return_pictures = True
+    
 
 
     output = cv.subtract(frame,background)
@@ -71,7 +74,7 @@ def main():
             print('Image not captured') 
             break
         
-        output,gray,blurred,edges, outline = backgrond_removal2(frame,background_frame)
+        output,gray,blurred,edges, outline = backgrond_removal2(frame,background_frame,True)
         cv.imshow("original",frame)
         cv.imshow("output", output)
         cv.imshow("Gray",gray) 
