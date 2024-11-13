@@ -6,6 +6,7 @@ from time import time, sleep
 import pyaudio
 import threading
 import os
+from edgeDetection import backgrond_removal2
 
 """notes
 
@@ -19,24 +20,17 @@ final_outline = np.zeros((1,2)).tobytes()
 def camera_feed():
 
     vid = cv2.VideoCapture(0)
+    print("move")
+    sleep(3)
+
+    ret, background = vid.read()
 
     while(True):
 
         ret, frame = vid.read()
-        gray = cv2.cvtColor(frame, cv2.COLOR_BGR2GRAY)
-        blur = cv2.GaussianBlur(gray, (3,3), 0)
-        edges = cv2.Canny(image=frame, threshold1=100, threshold2=200)
-        contours, hier = cv2.findContours(edges, cv2.RETR_TREE, cv2.CHAIN_APPROX_NONE)
-
-        outline = [] # do this but with np.zeros((44800, 2))?
-        for contour in contours:
-            outline += [point[0] for point in contour]
-        outline = np.array(outline)
-        # maxamp = max(abs(outline))
-        # outline = outline / maxamp
 
         global final_outline
-        final_outline = outline.astype(np.float32).tobytes()
+        final_outline = backgrond_removal2(frame, background).astype(np.dtype(np.int16)).tobytes()
 
         if False or cv2.waitKey(1) & 0xFF == ord('q'):
             break
@@ -47,9 +41,9 @@ def camera_feed():
 def audio_stream():
 
     pya = pyaudio.PyAudio()
-    stream = pya.open(format=pya.get_format_from_width(width=2),
+    stream = pya.open(format=pyaudio.paInt16,
                   channels=2,
-                  rate=44800,
+                  rate=22000,
                   output=True)
     global final_outline
 

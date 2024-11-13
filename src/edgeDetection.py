@@ -8,7 +8,7 @@ import numpy as np
  
 
 
-def backgrond_removal2(frame, background, return_pictures=False):
+def backgrond_removal2(frame, background, return_pictures=False, size=2048):
     #Takes a frame of a video stream and a picture of a background
     #and does background removal, edge detection, find contours, procesess contours
     #works best with a flat, monocolour background
@@ -34,12 +34,22 @@ def backgrond_removal2(frame, background, return_pictures=False):
     #find contours
     contours, hier = cv.findContours(edges, cv.RETR_TREE, cv.CHAIN_APPROX_NONE)
 
-    outline = [] # do this but with np.zeros((44800, 2))?
-    for contour in contours:
-        outline += [point[0] for point in contour]
-    outline = np.array(outline)
+    # outline = [] # do this but with np.zeros((44800, 2))?
+    # for contour in contours:
+    #     outline += [point[0] for point in contour]
+    # outline = np.array(outline)
     # maxamp = max(abs(outline))
     # outline = outline / maxamp
+
+    outline = np.zeros((size, 2),dtype=np.int16)
+    index = 0
+    for contour in contours:
+        for point in contour:
+            outline[index] = point
+            index += 1
+            if index >= size: break
+        if index >= size: break
+    outline = 32*outline
 
     if return_pictures == True:
         return output, edges, blurred, gray,outline
@@ -60,7 +70,7 @@ def main():
     time.sleep(1)
 
     print('taking picture \n')
-    cap = cv.VideoCapture(1) 
+    cap = cv.VideoCapture(0) 
     ret, background_frame = cap.read()
     
     
@@ -81,6 +91,9 @@ def main():
         
         cv.imshow("Blurred", blurred) 
         cv.imshow("Edges", edges)
+
+        print(outline)
+        print(np.max(outline), np.min(outline))
 
         # Exit the loop when 'q' key is pressed 
         if cv.waitKey(1) & 0xFF == ord('q'): 
